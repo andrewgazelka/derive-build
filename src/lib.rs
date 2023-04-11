@@ -52,6 +52,7 @@ fn normalize(input: &Type) -> proc_macro2::TokenStream {
     }
 }
 
+#[allow(clippy::too_many_lines)]
 fn impl_build_macro(ast: &DeriveInput) -> TokenStream {
     let name = &ast.ident;
     let generics = &ast.generics;
