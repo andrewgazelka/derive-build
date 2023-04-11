@@ -48,6 +48,6 @@ fn main() {
 - [ ] Support for `HashSet<T>` fields
 - [ ] Support for `BTreeMap<K, V>` fields
 - [ ] Support for `BTreeSet<T>` fields
-- [ ] Support for `Box<T>` fields
-- [ ] Support for `Rc<T>` fields
-- [ ] Support for `Arc<T>` fields
+- [x] Support for `Box<T>` fields
+- [x] Support for `Rc<T>` fields
+- [x] Support for `Arc<T>` fields
