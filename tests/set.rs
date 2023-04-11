@@ -24,8 +24,8 @@ fn test_builder() {
     let expected = Request {
         url: "example.com".to_string(),
         path: Some("tester".to_string()),
-        messages: ["hello".to_string()].into_iter().collect(),
-        b_tree_messages: ["goodbye".to_string()].into_iter().collect(),
+        messages: std::iter::once("hello".to_string()).collect(),
+        b_tree_messages: std::iter::once("goodbye".to_string()).collect(),
     };
 
     assert_eq!(request, expected);
