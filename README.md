@@ -51,3 +51,4 @@ fn main() {
 - [x] Support for `Box<T>` fields
 - [x] Support for `Rc<T>` fields
 - [x] Support for `Arc<T>` fields
+- [x] Support for integer types
