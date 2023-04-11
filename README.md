@@ -44,10 +44,10 @@ fn main() {
 - [x] Support for references (`&'a T`) fields
 - [x] Automatic `Into<T>` conversions
 - [x] Automatic singularization of field names
-- [ ] Support for `HashMap<K, V>` fields
-- [ ] Support for `HashSet<T>` fields
-- [ ] Support for `BTreeMap<K, V>` fields
-- [ ] Support for `BTreeSet<T>` fields
+- [x] Support for `HashMap<K, V>` fields
+- [x] Support for `HashSet<T>` fields
+- [x] Support for `BTreeMap<K, V>` fields
+- [x] Support for `BTreeSet<T>` fields
 - [x] Support for `Box<T>` fields
 - [x] Support for `Rc<T>` fields
 - [x] Support for `Arc<T>` fields

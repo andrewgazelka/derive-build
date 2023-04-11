@@ -1,6 +1,6 @@
 [package]
 name = "derive-build"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 authors = ["Andrew Gazelka <andrew.gazelka@gmail.com>"]
 description = "An opinionated builder macro in Rust"

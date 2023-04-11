@@ -1,7 +1,8 @@
 extern crate proc_macro;
 
-use inflector::string::singularize::to_singular;
 use proc_macro::TokenStream;
+
+use inflector::string::singularize::to_singular;
 use quote::quote;
 use syn::{parse_macro_input, DeriveInput, Meta, Path, Type, TypePath};
 
@@ -106,30 +107,62 @@ fn impl_build_macro(ast: &DeriveInput) -> TokenStream {
                     }),
             }) = segments.first()
             {
-                if ident == "Option" {
-                    if let Some(syn::GenericArgument::Type(inner_type)) = args.first() {
-                        let inner_type = normalize(inner_type);
-                        return quote! {
-                            pub fn #field_name(mut self, #field_name: #inner_type) -> Self {
-                                self.#field_name = Some(#field_name.into());
-                                self
-                            }
-                        };
-                    }
-                } else if ident == "Vec" {
-                    if let Some(syn::GenericArgument::Type(inner_type)) = args.first() {
-                        let field_name_str = field_name.clone().unwrap().to_string();
-                        let singular = to_singular(&field_name_str);
-                        let singular: syn::Ident = syn::parse_str(&singular).unwrap();
+                let singular: syn::Ident = {
+                    let field_name_str = field_name.clone().unwrap().to_string();
+                    let singular = to_singular(&field_name_str);
+                    syn::parse_str(&singular).unwrap()
+                };
 
-                        let inner_type = normalize(inner_type);
-                        return quote! {
-                            pub fn #singular(mut self, #singular: #inner_type) -> Self {
-                                self.#field_name.push(#singular.into());
-                                self
-                            }
-                        };
+                match ident.to_string().as_str() {
+                    "Option" => {
+                        if let Some(syn::GenericArgument::Type(inner_type)) = args.first() {
+                            let inner_type = normalize(inner_type);
+                            return quote! {
+                                pub fn #field_name(mut self, #field_name: #inner_type) -> Self {
+                                    self.#field_name = Some(#field_name.into());
+                                    self
+                                }
+                            };
+                        }
                     }
+                    "Vec" => {
+                        if let Some(syn::GenericArgument::Type(inner_type)) = args.first() {
+                            let inner_type = normalize(inner_type);
+                            return quote! {
+                                pub fn #singular(mut self, #singular: #inner_type) -> Self {
+                                    self.#field_name.push(#singular.into());
+                                    self
+                                }
+                            };
+                        }
+                    }
+                    "HashMap" | "BTreeMap" => {
+                        let mut args = args.iter();
+                        if let Some(syn::GenericArgument::Type(key_type)) = args.next() {
+                            if let Some(syn::GenericArgument::Type(value_type)) = args.next() {
+                                let key_type = normalize(key_type);
+                                let value_type = normalize(value_type);
+                                return quote! {
+                                    pub fn #singular(mut self, key: #key_type, value: #value_type) -> Self {
+                                        self.#field_name.insert(key.into(), value.into());
+                                        self
+                                    }
+                                };
+                            }
+                        }
+                    }
+                    "HashSet" | "BTreeSet" => {
+                        if let Some(syn::GenericArgument::Type(inner_type)) = args.first() {
+                            let inner_type = normalize(inner_type);
+                            return quote! {
+                                pub fn #singular(mut self, #singular: #inner_type) -> Self {
+                                    self.#field_name.insert(#singular.into());
+                                    self
+                                }
+                            };
+                        }
+                    }
+                    _ => {}
                 }
             }
         }
