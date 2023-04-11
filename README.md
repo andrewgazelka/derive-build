@@ -2,7 +2,7 @@
 
 [![Crates.io](https://img.shields.io/crates/v/derive-build.svg?style=plastic)](http://crates.io/crates/derive-build)
 
-A powerful builder macro in Rust!
+An opinionated builder macro in Rust!
 
 ```rust
 #[derive(Default, Build, Eq, PartialEq, Debug)]
