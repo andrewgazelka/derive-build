@@ -26,6 +26,7 @@ fn normalize(input: &Type) -> proc_macro2::TokenStream {
             let last_segment = segments.last().unwrap();
             let ident = &last_segment.ident;
 
+            // Handle integers differently to avoid using `Into` trait for them
             if ident == "i8"
                 || ident == "i16"
                 || ident == "i32"
