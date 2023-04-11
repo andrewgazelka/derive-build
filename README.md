@@ -1,5 +1,7 @@
 # derive-build
 
+[![Crates.io](https://img.shields.io/crates/v/derive-build.svg?style=plastic)](http://crates.io/crates/derive-build)
+
 A powerful builder macro in Rust!
 
 ```rust
@@ -13,7 +15,7 @@ struct Request {
     messages: Vec<String>,
 }
 
-fn main(){
+fn main() {
     let request = Request::new("example.com")
         .path("tester")
         .message("hello")
@@ -24,7 +26,7 @@ fn main(){
         path: Some("tester".to_string()),
         messages: vec!["hello".to_string(), "goodbye".to_string()],
     };
-    
+
     assert_eq!(request, expected);
 }
 
