@@ -2,6 +2,10 @@
 name = "derive-build"
 version = "0.1.0"
 edition = "2021"
+authors = ["Andrew Gazelka <andrew.gazelka@gmail.com>"]
+description = "A derive macro for building structs"
+license = "MIT"
+repository = "https://github.com/andrewgazelka/derive-build"
 
 [lib]
 proc-macro = true
